@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View All Profiles</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #6A5ACD;;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #6A5ACD;;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #eafaf1;
+    }
+
+    .btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-btn {
+      padding: 10px 20px;
+      border: none;
+      background-color: #6A5ACD;;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      background-color: #6A5ACD;
+    }
+  </style>
+</head>
+<body>
+  <h1>Job Seeker Profiles</h1>
+  
+  <!-- Table to Display Profiles -->
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Skills</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="profile-table">
+      <!-- Data will be dynamically populated here -->
+    </tbody>
+  </table>
+
+  <!-- Back Button -->
+  <div class="btn-container">
+    <button class="back-btn" onclick="goBack()">Back to Dashboard</button>
+  </div>
+
+  <script>
+    // Mock Data for Job Seeker Profiles
+    const profiles = [
+      { id: 1, name: "John Doe", email: "john.doe@example.com", skills: "JavaScript, HTML, CSS" },
+      { id: 2, name: "Jane Smith", email: "jane.smith@example.com", skills: "Python, Django, Machine Learning" },
+      { id: 3, name: "Emily Davis", email: "emily.davis@example.com", skills: "React, Node.js, MongoDB" },
+      { id: 4, name: "Michael Brown", email: "michael.brown@example.com", skills: "Java, Spring Boot, Hibernate" }
+    ];
+
+    // Function to Load Profiles into the Table
+    function loadProfiles() {
+      const table = document.getElementById("profile-table");
+      profiles.forEach((profile, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${profile.name}</td>
+          <td>${profile.email}</td>
+          <td>${profile.skills}</td>
+          <td>
+            <button class="action-btn" onclick="viewProfileDetails(${profile.id})">View</button>
+            <button class="action-btn" onclick="qpproveProfile(${profile.id})" style="background-color: #0000ff;">Approve</button>
+            <button class="action-btn" onclick="deleteProfile(${profile.id})" style="background-color: #f44336;">Delete</button>
+          </td>
+        `;
+        table.appendChild(row);
+      });
+    }
+
+    // Function to Handle "View" Action
+    function viewProfileDetails(id) {
+      const profile = profiles.find((p) => p.id === id);
+      alert(`Profile Details:\n\nName: ${profile.name}\nEmail: ${profile.email}\nSkills: ${profile.skills}`);
+    }
+
+    // Function to Handle "Delete" Action
+    function deleteProfile(id) {
+      const index = profiles.findIndex((p) => p.id === id);
+      if (index !== -1) {
+        profiles.splice(index, 1);
+        alert("Profile deleted successfully.");
+        document.getElementById("profile-table").innerHTML = ""; // Clear existing rows
+        loadProfiles(); // Reload the updated profiles
+      }
+    }
+
+    // Function to Navigate Back to Admin Dashboard
+    function goBack() {
+      window.location.href = "dashboard.html"; // Replace this with the actual URL of the admin dashboard
+    }
+
+    // Load Profiles on Page Load
+    window.onload = loadProfiles;
+  </script>
+</body>
+</html>

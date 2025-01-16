@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monitor Employer Jobs</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #6A5ACD;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #6A5ACD;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #eafaf1;
+    }
+
+    button {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      background-color: #6A5ACD;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #6A5ACD;
+    }
+
+    .btn-danger {
+      background-color: #f44336;
+    }
+
+    .btn-danger:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <h1>Monitor Jobs Posted by Employers</h1>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Employer Name</th>
+          <th>Job Title</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="job-table">
+        <!-- Job details will be dynamically inserted here -->
+      </tbody>
+    </table>
+    <div class="btn-container">
+        <button type="button" class="back-btn" onclick="goBack()">Back to Dashboard</button>
+      </div>
+  </div>
+
+  <script>
+    // Mock Data for Employers and Their Jobs
+    let jobs = [
+      {
+        id: 1,
+        employer: "Tech Solutions Ltd",
+        title: "Frontend Developer",
+        description: "Develop user-friendly web interfaces using React.js.",
+        location: "Remote",
+        salary: "$70,000 - $90,000"
+      },
+      {
+        id: 2,
+        employer: "Innovatech Corp",
+        title: "Data Scientist",
+        description: "Analyze data and build predictive models.",
+        location: "New York, NY",
+        salary: "$110,000 - $130,000"
+      },
+      {
+        id: 3,
+        employer: "AlphaSoft",
+        title: "UI/UX Designer",
+        description: "Design modern and responsive interfaces.",
+        location: "Austin, TX",
+        salary: "$60,000 - $80,000"
+      },
+      {
+        id: 4,
+        employer: "BetaWorks",
+        title: "DevOps Engineer",
+        description: "Manage CI/CD pipelines and cloud infrastructure.",
+        location: "Remote",
+        salary: "$95,000 - $115,000"
+      }
+    ];
+
+    // Function to Populate the Table with Jobs
+    function populateJobTable() {
+      const tableBody = document.getElementById("job-table");
+      tableBody.innerHTML = ""; // Clear existing rows
+
+      // Dynamically create rows for each job
+      jobs.forEach((job, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${job.employer}</td>
+          <td>${job.title}</td>
+          <td>
+            <button onclick="viewJobDetails(${job.id})">View</button>
+            <button class="btn-danger" onclick="rejectJob(${job.id})">Reject</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Function to View Job Details
+    function viewJobDetails(jobId) {
+      const job = jobs.find((job) => job.id === jobId);
+
+      if (job) {
+        alert(`Employer: ${job.employer}
+Job Title: ${job.title}
+Description: ${job.description}
+Location: ${job.location}
+Salary: ${job.salary}`);
+      } else {
+        alert("Job not found.");
+      }
+    }
+
+    // Function to Reject a Job
+    function rejectJob(jobId) {
+      const jobIndex = jobs.findIndex((job) => job.id === jobId);
+
+      if (jobIndex !== -1) {
+        const confirmation = confirm("Are you sure you want to reject this job?");
+        if (confirmation) {
+          jobs.splice(jobIndex, 1); // Remove the job from the list
+          alert("Job rejected successfully.");
+          populateJobTable(); // Refresh the table
+        }
+      } else {
+        alert("Job not found.");
+      }
+    }
+
+    // Populate the table on page load
+    window.onload = populateJobTable;
+    function goBack() {
+      window.location.href = 'dashboard.html'; // Replace with the actual filename of your dashboard
+    }
+  </script>
+</body>
+</html>

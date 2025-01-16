@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Job Recommendations</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #6A5ACD;;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #6A5ACD;;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #eafaf1;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #6A5ACD;;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #6A5ACD;
+    }
+
+    .btn-danger {
+      background-color: #f44336;
+    }
+
+    .btn-danger:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+  <h1>Manage Job Recommendations</h1>
+  <div class="container">
+    <!-- Form to Add New Recommendation -->
+    <div class="form-group">
+      <h2>Add New Job Recommendation</h2>
+      <label for="job-title">Job Title</label>
+      <input type="text" id="job-title" placeholder="Enter job title" required>
+      
+      <label for="company-name">Company Name</label>
+      <input type="text" id="company-name" placeholder="Enter company name" required>
+      
+      <label for="job-description">Job Description</label>
+      <textarea id="job-description" placeholder="Enter job description" rows="4"></textarea>
+      
+      <button onclick="addRecommendation()">Add Recommendation</button>
+      <button type="button" class="back-btn" onclick="goBack()">Back to Dashboard</button>
+    </div>
+
+    <!-- Table to Display Recommendations -->
+    <h2>Job Recommendations</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Job Title</th>
+          <th>Company</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="recommendation-table">
+        <!-- Recommendations will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Array to Store Recommendations
+    let recommendations = [];
+
+    // Function to Add a Recommendation
+    function addRecommendation() {
+      // Get form values
+      const jobTitle = document.getElementById("job-title").value;
+      const companyName = document.getElementById("company-name").value;
+      const jobDescription = document.getElementById("job-description").value;
+
+      // Validate input
+      if (!jobTitle || !companyName) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      // Add to recommendations array
+      const recommendation = {
+        id: recommendations.length + 1,
+        title: jobTitle,
+        company: companyName,
+        description: jobDescription
+      };
+      recommendations.push(recommendation);
+
+      // Reset the form
+      document.getElementById("job-title").value = "";
+      document.getElementById("company-name").value = "";
+      document.getElementById("job-description").value = "";
+
+      // Update the table
+      updateRecommendationsTable();
+    }
+
+    // Function to Update the Table
+    function updateRecommendationsTable() {
+      const tableBody = document.getElementById("recommendation-table");
+      tableBody.innerHTML = ""; // Clear existing rows
+
+      // Add each recommendation as a table row
+      recommendations.forEach((rec, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${rec.title}</td>
+          <td>${rec.company}</td>
+          <td>
+            <button onclick="viewRecommendation(${rec.id})">View</button>
+            <button class="btn-danger" onclick="deleteRecommendation(${rec.id})">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Function to View a Recommendation (Shows Details)
+    function viewRecommendation(id) {
+      const recommendation = recommendations.find((rec) => rec.id === id);
+      if (recommendation) {
+        alert(`Job Title: ${recommendation.title}\nCompany: ${recommendation.company}\nDescription: ${recommendation.description}`);
+      } else {
+        alert("Recommendation not found.");
+      }
+    }
+
+    // Function to Delete a Recommendation
+    function deleteRecommendation(id) {
+      recommendations = recommendations.filter((rec) => rec.id !== id);
+      updateRecommendationsTable();
+    }
+    function goBack() {
+      window.location.href = 'dashboard.html'; // Replace with the actual filename of your dashboard
+    }
+  </script>
+</body>
+</html>

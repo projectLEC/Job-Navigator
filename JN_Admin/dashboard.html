@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 2rem;
+      color: #6A5ACD;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 20px;
+    }
+
+    .column {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      flex: 1;
+    }
+
+    .column h2 {
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+      color: #6A5ACD;
+    }
+
+    .action-list {
+      list-style: none;
+    }
+
+    .action-list li {
+      margin: 10px 0;
+      padding: 10px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .action-list li:hover {
+      background: #eafaf1;
+    }
+
+    .action-btn {
+      padding: 6px 10px;
+      border: none;
+      background-color: #6A5ACD;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .action-btn:hover {
+      background-color: #6A5ACD;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Dashboard</h1>
+  <div class="container">
+    <!-- Column for Job Seeker Management -->
+    <div class="column" id="job-seeker-management">
+      <h2>Manage Job Seekers</h2>
+      <ul class="action-list">
+        <li>
+          View All Profiles
+          <button class="action-btn" onclick="viewProfiles()">View</button>
+        </li>
+        <li>
+          Send Notifications
+          <button class="action-btn" onclick="sendNotification('Job Seeker')">Send</button>
+        </li>
+        <li>
+          Manage Recommendations
+          <button class="action-btn" onclick="manageRecommendations()">Manage</button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Column for Employer Management -->
+    <div class="column" id="employer-management">
+      <h2>Manage Employers</h2>
+      <ul class="action-list">
+        <li>
+          View All Employers
+          <button class="action-btn" onclick="viewEmployers()">View</button>
+        </li>
+        <li>
+          Send Notifications
+          <button class="action-btn" onclick="sendNotification('Employer')">Send</button>
+        </li>
+        <li>
+          Monitor Posted Jobs
+          <button class="action-btn" onclick="monitorJobs()">Monitor</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Function to navigate to the "View All Profiles" page for Job Seekers
+function viewProfiles() {
+  window.location.href = "s_profile.html"; // Replace with the actual path to s_profile.html
+}
+
+// Function to navigate to the "Send Notification" page for Job Seekers
+function sendNotification(userType) {
+  if (userType === "Job Seeker") {
+    window.location.href = "s_notification.html"; // Replace with the actual path to s_notification.html
+  } else if (userType === "Employer") {
+    window.location.href = "e_notification.html"; // Replace with the actual path to e_notification.html
+  }
+}
+
+// Function to navigate to the "Manage Recommendations" page for Job Seekers
+function manageRecommendations() {
+  window.location.href = "s_recommendations.html"; // Replace with the actual path to s_recommendations.html
+}
+
+// Function to navigate to the "View All Employers" page
+function viewEmployers() {
+  window.location.href = "e_profile.html"; // Replace with the actual path to e_profile.html
+}
+
+// Function to navigate to the "Monitor Posted Jobs" page for Employers
+function monitorJobs() {
+  window.location.href = "e_jobs.html"; // Replace with the actual path to e_jobs.html
+}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employers and Job Details</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #6A5ACD;;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #6A5ACD;;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #eafaf1;
+    }
+
+    button {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+      background-color: #6A5ACD;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #6A5ACD;;
+    }
+  </style>
+</head>
+<body>
+  <h1>Employers and Job Details</h1>
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Employer Name</th>
+          <th>Job Title</th>
+          <th>Brief Job Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="employer-table">
+        <!-- Job details will be dynamically inserted here -->
+      </tbody>
+    </table>
+    <div class="btn-container">
+        <button class="back-btn" onclick="goBack()">Back to Dashboard</button>
+      </div>
+  </div>
+
+  <script>
+    // Mock Data for Employers and Their Jobs
+    const employers = [
+      {
+        id: 1,
+        name: "Tech Solutions Ltd",
+        jobs: [
+          {
+            title: "Frontend Developer",
+            description: "Develop user-friendly web interfaces using React.js.",
+            location: "Remote",
+            salary: "$70,000 - $90,000"
+          },
+          {
+            title: "Backend Engineer",
+            description: "Design and build APIs using Node.js.",
+            location: "San Francisco, CA",
+            salary: "$100,000 - $120,000"
+          }
+        ]
+      },
+      {
+        id: 2,
+        name: "Innovatech Corp",
+        jobs: [
+          {
+            title: "Data Scientist",
+            description: "Analyze data and build predictive models.",
+            location: "New York, NY",
+            salary: "$110,000 - $130,000"
+          }
+        ]
+      },
+      {
+        id: 3,
+        name: "AlphaSoft",
+        jobs: [
+          {
+            title: "UI/UX Designer",
+            description: "Design modern and responsive interfaces.",
+            location: "Austin, TX",
+            salary: "$60,000 - $80,000"
+          },
+          {
+            title: "DevOps Engineer",
+            description: "Manage CI/CD pipelines and cloud infrastructure.",
+            location: "Remote",
+            salary: "$95,000 - $115,000"
+          }
+        ]
+      }
+    ];
+
+    // Function to Populate the Table with Employers and Job Details
+    function populateEmployerTable() {
+      const tableBody = document.getElementById("employer-table");
+      let rowIndex = 0; // Counter for the row number
+
+      employers.forEach((employer) => {
+        employer.jobs.forEach((job) => {
+          rowIndex++;
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${rowIndex}</td>
+            <td>${employer.name}</td>
+            <td>${job.title}</td>
+            <td>${job.description}</td>
+            <td>
+              <button onclick="viewJobDetails(${employer.id}, '${job.title}')">View Details</button>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+      });
+    }
+
+    // Function to View Detailed Job Information
+    function viewJobDetails(employerId, jobTitle) {
+      const employer = employers.find((e) => e.id === employerId);
+      const job = employer.jobs.find((j) => j.title === jobTitle);
+
+      if (job) {
+        alert(`Employer: ${employer.name}
+Job Title: ${job.title}
+Description: ${job.description}
+Location: ${job.location}
+Salary: ${job.salary}`);
+      } else {
+        alert("Job details not found.");
+      }
+    }
+
+    // Populate the table on page load
+    window.onload = populateEmployerTable;
+    function goBack() {
+      window.location.href = 'dashboard.html'; // Replace with the actual filename of your dashboard
+    }
+  </script>
+</body>
+</html>
